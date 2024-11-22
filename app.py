@@ -1,18 +1,45 @@
 import streamlit as st
+import requests
+from streamlit_folium import st_folium
+import folium
+from PIL import Image
+import toml
+
+# Load the .toml file
+config = toml.load(".secrets.toml")
+
+# Extract Mapbox details
+MAPBOX_ACCESS_TOKEN = config["mapbox"]["MAPBOX_ACCESS_TOKEN"]
+GEOCODING_API_URL = config["mapbox"]["GEOCODING_API_URL"]
+DIRECTIONS_API_URL = config["mapbox"]["DIRECTIONS_API_URL"]
+MODEL_API_URL = config["model"]["MODEL_API_URL"]
+
+
+st.title("NYC taxi Fare Calculator")
+
+image = Image.open("path/to/image.png")  # Replace with your image path
+st.image(image, caption="Sample Image", use_column_width=True)
+
+### HEADER 1: FILL IN FORM###
+st.header("Your trip details")
+
+### SUBHEADER 1.1: DETAIL FILL IN ###
+st.markdown("_Please fill in your trip details._")
+
+timestamp = st.text_input("Date and Time")
+pickup_location = st.text_input("Pickup Location")
+dropoff_location = st.text_input("Dropoff Location")
+passenger_count = st.selectbox("Passenger Count", [1,2,3,4,5,6,7,8])
+
 
 '''
-# TaxiFareModel front
-'''
 
-st.markdown('''
-Remember that there are several ways to output content into your web page...
 
-Either as with the title by just creating a string (or an f-string).
-Or as with this paragraph using the `st.` functions
-''')
 
-'''
+
+
 ## Here we would like to add some controllers in order to ask the user to select the parameters of the ride
+
 
 1. Let's ask for:
 - date and time
@@ -22,6 +49,16 @@ Or as with this paragraph using the `st.` functions
 - dropoff latitude
 - passenger count
 '''
+
+### SUBHEADER 1.2: MAP ###
+
+pickup_longitude = st.text_input("Pickup Longitude")
+pickup_latitude = st.text_input("Pickup Latitude")
+dropoff_longitude = st.text_input("Dropoff Longitude")
+dropoff_latitude = st.text_input("Dropoff Latitude")
+
+st.header("Our prediction")
+
 
 '''
 ## Once we have these, let's call our API in order to retrieve a prediction
